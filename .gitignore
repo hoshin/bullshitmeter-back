@@ -1,5 +1,6 @@
 node_modules
-bower_components
-npm_debug.log
+*.log
 *~
-tmp/file.wav
+tmp/*
+dist
+yarn.lock

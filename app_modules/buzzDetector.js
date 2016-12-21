@@ -1,40 +1,42 @@
-var additionalWords = require('../config/data/moreBuzz.json');
-var _ = require('lodash');
-var buzzword = require('buzzwords');
-var cleanupUtils = new (require('../utils/cleanupUtils.js'))();
+const additionalWords = require( '../config/data/moreBuzz.json');
+import _ from 'lodash';
+import buzzword from 'buzzwords';
+import {CleanupUtils} from '../utils/cleanupUtils.js';
+const cleanupUtils = new CleanupUtils();
 
-var BuzzDetector = function () {
-    _.forEach(additionalWords, function (additionalWord) {
-        buzzword.add(additionalWord.toLowerCase());
-    });
-};
+class BuzzDetector{
+    constructor(){
+        _.forEach(additionalWords, function (additionalWord) {
+            buzzword.add(additionalWord.toLowerCase());
+        });
+    }
 
-BuzzDetector.prototype.amIBuzzing = function (sentence) {
-    //diacritics / punctuation removal before ?
-    var sentence = sentence.toLowerCase();
-    var buzzPressionsMatches = [];
-    _.forEach(additionalWords, function (additionalWord) {
-        if (additionalWord.indexOf(' ') > -1) {
-            if (sentence.indexOf(additionalWord) > -1) {
-                buzzPressionsMatches.push(additionalWord);
+    amIBuzzing(sentence) {
+        //diacritics / punctuation removal before ?
+        const sentenceToGrade = sentence.toLowerCase();
+        const buzzPressionsMatches = [];
+        _.forEach(additionalWords, function (additionalWord) {
+            if (additionalWord.indexOf(' ') > -1) {
+                if (sentenceToGrade.indexOf(additionalWord) > -1) {
+                    buzzPressionsMatches.push(additionalWord);
+                }
             }
-        }
-    });
-    var cleanedWords = cleanupUtils.removeStopWords(sentence);
-    var words = cleanedWords.split(' ');
-    var buzzWords = _.filter(words, function (word) {
-        console.log("hyperlocal", word, buzzword.is(word));
-        return(buzzword.is(word));
-    });
-    return buzzWords.concat(buzzPressionsMatches);
-};
+        });
+        const cleanedWords = cleanupUtils.removeStopWords(sentenceToGrade);
+        const words = cleanedWords.split(' ');
+        const buzzWords = _.filter(words, function (word) {
+            console.log("hyperlocal", word, buzzword.is(word));
+            return(buzzword.is(word));
+        });
+        return buzzWords.concat(buzzPressionsMatches);
+    }
 
-BuzzDetector.prototype.buzzPerTotalwords = function (sentence) {
-    var cleanedWords = cleanupUtils.removeStopWords(sentence);
-    var totalBuzz = this.amIBuzzing(sentence);
-    var computedRatio = (totalBuzz.length / cleanedWords.split(' ').length);
-    var result = {ratio: computedRatio, suspects: totalBuzz};
-    return result;
-};
+    buzzPerTotalwords(sentence) {
+        const cleanedWords = cleanupUtils.removeStopWords(sentence);
+        const totalBuzz = this.amIBuzzing(sentence);
+        const computedRatio = (totalBuzz.length / cleanedWords.split(' ').length);
+        return {ratio: computedRatio, suspects: totalBuzz};
+    };
+}
 
-module.exports = BuzzDetector;
+export {BuzzDetector};

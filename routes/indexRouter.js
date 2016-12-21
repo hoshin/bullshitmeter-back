@@ -1,18 +1,19 @@
-var express = require('express');
-var passport = require('passport');
-var router = express.Router();
+import express from 'express';
+import passport from 'passport';
+const router = express.Router();
+import formidable from 'formidable';
 
-var indexController = new (require('../controllers/indexController.js'))();
+import {IndexController} from '../controllers/indexController.js';
+const indexController = new IndexController();
 
-var session = require('express-session');
+const session = require('express-session');
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development'
 }
 
-var config = require('../config/all.js');
+const config = require('../config/all.js');
 
-
-var app = express();
+const app = express();
 
 app.use(session({ secret: 'Some Secret !!!', key: 'sid'}));
 app.use(passport.initialize());
@@ -33,9 +34,9 @@ router.get('/', function (req, res, next) {
 router.get('/score-me', function (req, res, next) {
     res.json({score: indexController.receiveSound(req.body.sound)});
 });
-var formidable = require('formidable');
+
 router.post('/sound', function (req, res, next) {
-    var form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
         //FIXME: on répond avant la fin des callback. Tester de faire un res.write puis res.end dans les callback ?
         indexController.receiveSound(fields, files, function (err, result) {
@@ -44,7 +45,7 @@ router.post('/sound', function (req, res, next) {
           }
           console.log("final result = "+result);
           req.body.sentence = result;
-          var grades = null;
+          let grades = null;
           if(result) {
             grades = indexController.sentenceGrading(req);
           }
@@ -56,7 +57,7 @@ router.post('/sound', function (req, res, next) {
 
 router.post('/score-me', function (req, res, next) {
     req.body.sentence = JSON.stringify({text:req.body.sentence});
-    var gradeData = indexController.sentenceGrading(req);
+    const gradeData = indexController.sentenceGrading(req);
     if (req.body.client == 'web') {
         res.render('results', {title: config.APP_TITLE, data: gradeData})
     } else {

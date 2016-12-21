@@ -1,44 +1,46 @@
-var SentenceGradeLevel = require('../app_modules/sentenceGradeLevel');
-var buzzDetector = new(require('../app_modules/buzzDetector'))();
-var speechApi = new(require('../app_modules/googleSpeechApi'))();
-var fs = require('fs');
+import {SentenceGradeLevel} from '../app_modules/sentenceGradeLevel';
+import {BuzzDetector} from '../app_modules/buzzDetector';
+const buzzDetector = new BuzzDetector();
+import {GoogleSpeechApi} from '../app_modules/googleSpeechApi';
+const speechApi = new GoogleSpeechApi();
 
-var IndexController = function () {
-};
+class IndexController {
+    constructor() {
 
-IndexController.prototype.scorePhrase = function (sentence) {
-    return buzzDetector.buzzPerTotalwords(sentence);
-};
+    }
 
+    scorePhrase(sentence) {
+        return buzzDetector.buzzPerTotalwords(sentence);
+    }
 
-IndexController.prototype.receiveSound = function (sound, files, callback) {
-  var soundPath = files['myUpload']['path'];
-  var result = speechApi.readSound(soundPath, function(err, recognizedText) {
-    callback(err, JSON.stringify({"text": recognizedText}));
-  });
-};
+    receiveSound(sound, files, callback) {
+        const soundPath = files['myUpload']['path'];
+        speechApi.readSound(soundPath, function (err, recognizedText) {
+            callback(err, JSON.stringify({"text": recognizedText}));
+        });
+    }
 
-IndexController.prototype.sentenceGrading = function (req) {
-    var actualText = JSON.parse(req.body.sentence).text;
-    var fleschKincaid = new SentenceGradeLevel(actualText);
+    sentenceGrading(req) {
+        const actualText = JSON.parse(req.body.sentence).text;
+        const fleschKincaid = new SentenceGradeLevel(actualText);
 
-    var buzz = buzzDetector.buzzPerTotalwords(actualText);
-    var fkGrade = fleschKincaid.grade()
-    var gradingDetails = {
-        buzzwords:buzz.suspects,
-        ratio:buzz.ratio,
-        grade:Math.min(fkGrade/2 + buzz.ratio*fkGrade, 20),
-        'flesch-kincaid':fkGrade,
-        recognized_text:actualText
-    };
+        const buzz = buzzDetector.buzzPerTotalwords(actualText);
+        const fkGrade = fleschKincaid.grade();
+        const gradingDetails = {
+            buzzwords       : buzz.suspects,
+            ratio           : buzz.ratio,
+            grade           : Math.min(fkGrade / 2 + buzz.ratio * fkGrade, 20),
+            'flesch-kincaid': fkGrade,
+            recognized_text : actualText
+        };
 
-    console.log("gradingDetails = "+gradingDetails.ratio);
-    console.log("gradingDetails = "+gradingDetails.grade);
-    console.log("gradingDetails = "+gradingDetails['flesch-kincaid']);
-    console.log("gradingDetails = "+gradingDetails.recognized_text);
+        console.log("gradingDetails = " + gradingDetails.ratio);
+        console.log("gradingDetails = " + gradingDetails.grade);
+        console.log("gradingDetails = " + gradingDetails['flesch-kincaid']);
+        console.log("gradingDetails = " + gradingDetails.recognized_text);
 
+        return gradingDetails;
+    }
+}
 
-    return gradingDetails;
-};
-
-module.exports = IndexController;
+export {IndexController};

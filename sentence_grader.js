@@ -1,8 +1,8 @@
-var SentenceGradeLevel = require('./app_modules/sentenceGradeLevel.js');
+import SentenceGradeLevel from './app_modules/sentenceGradeLevel.js';
 
-var args = process.argv.slice(2);
-var sentence = args.join(' ')
+const args = process.argv.slice(2);
+const sentence = args.join(' ');
 
-var sentenceGradeLevel = new SentenceGradeLevel(sentence);
+const sentenceGradeLevel = new SentenceGradeLevel(sentence);
 console.log('Sentence grade : ' + sentenceGradeLevel.grade());
 

@@ -1,21 +1,23 @@
-var _ = require('lodash');
-var stopwords = require('../config/data/stopWords-FR.json');
-var CleanupUtils = function () {
-};
+import _ from 'lodash';
+import stopwords from '../config/data/stopWords-FR.json';
 
-CleanupUtils.prototype.removeStopWords = function (sentence) {
-    var splittedSentence = sentence.split(' ');
-    var result =
-        _.filter(splittedSentence, function (word) {
-            var endResult = true;
-            _.forEach(stopwords, function (stopWord) {
-                if (stopWord == word) {
-                    endResult = false;
-                }
-            });
-            return endResult;
-        });
-    return result.join(' ');
-};
+class CleanupUtils {
+    constructor() {
+    }
 
-module.exports = CleanupUtils;
+    removeStopWords(sentence) {
+        var splittedSentence = sentence.split(' ');
+        var result =
+                _.filter(splittedSentence, function (word) {
+                    var endResult = true;
+                    _.forEach(stopwords, function (stopWord) {
+                        if (stopWord == word) {
+                            endResult = false;
+                        }
+                    });
+                    return endResult;
+                });
+        return result.join(' ');
+    }
+}
+export {CleanupUtils};

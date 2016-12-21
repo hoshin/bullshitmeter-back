@@ -1,8 +1,6 @@
-'use strict';
-
-var _ = require('lodash');
+import config from './env/all.js';
 
 /**
  * Load environment configuration
  */
-module.exports = require('./env/all.js');
+module.exports = config;
