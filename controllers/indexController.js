@@ -16,7 +16,7 @@ class IndexController {
     receiveSound(sound, files, callback) {
         const soundPath = files['myUpload']['path'];
         speechApi.readSound(soundPath, function (err, recognizedText) {
-            callback(err, JSON.stringify({"text": recognizedText}));
+            callback(err, JSON.stringify({'text': recognizedText}));
         });
     }
 
@@ -26,20 +26,13 @@ class IndexController {
 
         const buzz = buzzDetector.buzzPerTotalwords(actualText);
         const fkGrade = fleschKincaid.grade();
-        const gradingDetails = {
+        return {
             buzzwords       : buzz.suspects,
             ratio           : buzz.ratio,
             grade           : Math.min(fkGrade / 2 + buzz.ratio * fkGrade, 20),
             'flesch-kincaid': fkGrade,
             recognized_text : actualText
         };
-
-        console.log("gradingDetails = " + gradingDetails.ratio);
-        console.log("gradingDetails = " + gradingDetails.grade);
-        console.log("gradingDetails = " + gradingDetails['flesch-kincaid']);
-        console.log("gradingDetails = " + gradingDetails.recognized_text);
-
-        return gradingDetails;
     }
 }
 

@@ -12,7 +12,7 @@ describe('CleanupUtils - Remove Stop Words', function () {
         assert.equal(actual, 'correct horse battery staple');
     });
 
-    it('should remove french stop words if they\'re present', function(){
+    it('should remove french stop words if they\'re present', function () {
         //setup
         const cleanup = new CleanupUtils();
         const sentence = 'le correct horse de la battery dans une staple';
@@ -21,5 +21,4 @@ describe('CleanupUtils - Remove Stop Words', function () {
         //assert
         assert.equal(actual, 'correct horse battery staple');
     });
-
 });

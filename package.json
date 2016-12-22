@@ -6,7 +6,7 @@
     "start": "babel-node app.js",
     "test": "mocha --compilers js:babel-core/register --recursive ./test/**/*Spec.js",
     "qualimetry": "babel-node node_modules/.bin/babel-istanbul cover _mocha --dir qualimetry/cover -- --compilers js:babel-core/register -R spec test/**/*",
-    "linting": "eslint ./js ./controllers ./routers ./test ./helpers ./*.js"
+    "linter": "eslint ./js ./controllers ./routers ./test ./helpers ./*.js"
   },
   "dependencies": {
     "babel-cli": "^6.5.1",

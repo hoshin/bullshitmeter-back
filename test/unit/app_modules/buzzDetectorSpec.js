@@ -11,7 +11,7 @@ describe('AmIBuzzing', function () {
         assert.equal(actual.length, 0);
     });
 
-    it('should return 3 if 3 buzzwords are found', function(){
+    it('should return 3 if 3 buzzwords are found', function () {
         //setup
         const buzzWord = new BuzzDetector();
         //action
@@ -20,7 +20,7 @@ describe('AmIBuzzing', function () {
         assert.equal(actual.length, 3);
     });
 
-    it('should detect custom words added by the app', function(){
+    it('should detect custom words added by the app', function () {
         //setup
         const buzzWord = new BuzzDetector();
         //action
@@ -29,7 +29,7 @@ describe('AmIBuzzing', function () {
         assert.equal(actual.length, 2);
     });
 
-    it('should detect custom composed buzzwords', function(){
+    it('should detect custom composed buzzwords', function () {
         //setup
         const buzzWord = new BuzzDetector();
         //action
@@ -38,7 +38,7 @@ describe('AmIBuzzing', function () {
         assert.equal(actual.length, 1);
     });
 
-    it('should detect custom composed buzzwords and a single buzzword', function(){
+    it('should detect custom composed buzzwords and a single buzzword', function () {
         //setup
         const buzzWord = new BuzzDetector();
         //action
@@ -48,17 +48,17 @@ describe('AmIBuzzing', function () {
     });
 });
 
-describe('BuzzPerTotalWords', function(){
-   it('should give a 0 ratio if no buzzword is detected', function(){
-       //setup
-       const buzzWord = new BuzzDetector();
-       //action
-       const actual = buzzWord.buzzPerTotalwords('some random sentence with no particular words');
-       //assert
-       assert.equal(actual.ratio, 0);
-   });
+describe('BuzzPerTotalWords', function () {
+    it('should give a 0 ratio if no buzzword is detected', function () {
+        //setup
+        const buzzWord = new BuzzDetector();
+        //action
+        const actual = buzzWord.buzzPerTotalwords('some random sentence with no particular words');
+        //assert
+        assert.equal(actual.ratio, 0);
+    });
 
-    it('should give a 1 rading if there are only buzzwords', function(){
+    it('should give a 1 rading if there are only buzzwords', function () {
         //setup
         const buzzWord = new BuzzDetector();
         //action
@@ -67,7 +67,7 @@ describe('BuzzPerTotalWords', function(){
         assert.equal(actual.ratio, 1);
     });
 
-    it('should return the buzz ratio and the suspected buzzwords in the same object', function(){
+    it('should return the buzz ratio and the suspected buzzwords in the same object', function () {
         //setup
         const buzzWord = new BuzzDetector();
         //action
