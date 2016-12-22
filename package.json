@@ -5,7 +5,7 @@
   "scripts": {
     "start": "babel-node app.js",
     "test": "mocha --compilers js:babel-core/register --recursive ./test/**/*Spec.js",
-    "qualimetry": "babel-node node_modules/.bin/isparta cover _mocha --dir qualimetry/cover -- --compilers js:babel-core/register -R spec test/*",
+    "qualimetry": "babel-node node_modules/.bin/babel-istanbul cover _mocha --dir qualimetry/cover -- --compilers js:babel-core/register -R spec test/**/*",
     "linting": "eslint ./js ./controllers ./routers ./test ./helpers ./*.js"
   },
   "dependencies": {
@@ -24,7 +24,7 @@
     "express-session": "1.8.2",
     "extend": "1.3.0",
     "flesch-kincaid": "0.0.1",
-    "formidable": "~1.0.15",
+    "formidable": "^1.0.17",
     "lodash": "2.4.1",
     "method-override": "2.2.0",
     "modelling": "*",
@@ -37,9 +37,12 @@
     "syllable": "^0.1.0"
   },
   "devDependencies": {
+    "babel-istanbul": "^0.12.1",
     "babel-loader": "^6.2.3",
     "babel-preset-es2015": "^6.5.0",
     "chai": "~1.9.1",
+    "eslint": "^3.12.2",
+    "istanbul": "^0.4.5",
     "mocha": "~1.21.4",
     "sinon": "~1.10.3"
   },
