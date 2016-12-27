@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node app.js",
+    "start": "./node_modules/babel-cli/bin/babel-node.js app.js",
     "test": "mocha --compilers js:babel-core/register --recursive ./test/**/*Spec.js",
     "qualimetry": "babel-node node_modules/.bin/babel-istanbul cover _mocha --dir qualimetry/cover -- --compilers js:babel-core/register -R spec test/**/*",
     "linter": "eslint ./js ./controllers ./routers ./test ./helpers ./*.js"
