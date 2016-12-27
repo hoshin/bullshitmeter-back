@@ -9,7 +9,7 @@ const app = new Server();
 app.connection({port: process.env.PORT || 3000});
 
 app.route(routes);
-app.register([require('vision'), require('inert')], function (err) {
+app.register([ require('vision'), require('inert') ], function ( err ) {
     if (err) {
         logger.error('Failed to load a plugin:', {errorMessage: err.message});
         throw err;
@@ -22,7 +22,7 @@ app.register([require('vision'), require('inert')], function (err) {
         path: './views'
     });
 });
-app.start((err) => {
+app.start(( err ) => {
     if (err) {
         throw err;
     }
