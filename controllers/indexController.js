@@ -21,7 +21,7 @@ class IndexController {
     }
 
     sentenceGrading(req) {
-        const actualText = JSON.parse(req.body.sentence).text;
+        const actualText = JSON.parse(req.payload.sentence).text;
         const fleschKincaid = new SentenceGradeLevel(actualText);
 
         const buzz = buzzDetector.buzzPerTotalwords(actualText);
